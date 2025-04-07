@@ -60,7 +60,9 @@ class Tamagotchi():
     #moods
     def moods(self):
         moods = ['happy', 'sad', 'hungry', 'angery', 'sleepy', 'excited', 'dead']
-        if self.hunger > 7:
+        if self.cleanliness < 1:
+            return 'dead'
+        elif self.hunger > 7:
             return 'hungry'
         elif self.happiness > 7:
             return 'happy'
@@ -70,8 +72,7 @@ class Tamagotchi():
             return 'dirty'
         elif self.training < 3:
             return 'angry'
-        elif self.cleanliness < 1:
-            return 'dead'
+        
 
     def tick(self):
         self.hunger += 1
