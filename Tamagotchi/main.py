@@ -117,34 +117,36 @@ pet = Tamagotchi(input("What would you like to name your Tamagotchi pet? :> ")) 
 
 playing = True #set playing to true to start the game loop
 while playing == True:
-    print(pet.display()) #display the pet stats and face
-    print("What would you like to do?")
-    print("1. Feed")
-    print("2. Play")
-    print("3. Clean")
-    print("4. Discipline")
-    print("5. Quit")
+    while pet.mood != 'dead':
+        print(pet.display()) #display the pet stats and face
+        print("What would you like to do?")
+        print("1. Feed")
+        print("2. Play")
+        print("3. Clean")
+        print("4. Discipline")
+        print("5. Quit")
 
-    choice = input("> ")
+        choice = input("> ")
 
-    if choice == '1':
-        # feed the pet
-        pet.hunger -= 1
-        pet.happiness += 1
-        pet.cleanliness -= 1
-    elif choice == '2':
-        # play with the pet
-        pass
-    elif choice == '3':
-        # clean the pet
-        pass
-    elif choice == '4':
-        # discipline the pet
-        pass
-    elif choice == '5':
-        break
+        
+        if choice == '1':
+            # feed the pet
+            pet.hunger -= 1
+            pet.happiness += 1
+            pet.cleanliness -= 1
+        elif choice == '2':
+            # play with the pet
+            pass
+        elif choice == '3':
+            # clean the pet
+            pass
+        elif choice == '4':
+            # discipline the pet
+            pass
+        elif choice == '5':
+            break
 
-    pet.mood = pet.moods()
+        pet.mood = pet.moods()
 
 """initial testing
 print(pet.face('dead')) #test
