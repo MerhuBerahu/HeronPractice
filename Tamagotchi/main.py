@@ -46,16 +46,38 @@ class Tamagotchi():
         self.health = 5
         self.cleanliness = 5
         self.training = 5
-        self.mood = None
+        self.mood = 'happy' #default mood
 
 
-    #moods
+    #faces
     def face(self, mood):
-        faces = {'happy': '^_^', 'sad': ';_;', 'hungry':':Q', 'angery':'>:[', 'sleepy':'-_- zZ', 'excited':'*^_^*', 'dead':'X_X', 'default':'0~0'}
+        faces = {'happy': '^_^', 'sad': ';_;', 'hungry':':Q', 'angry':'>:[', 'sleepy':'-_- zZ', 'excited':'*^_^*', 'dead':'X_X', 'default':'0~0'}
         if mood in faces:
             return faces[mood]
         else:
             return faces['default']
+
+    #moods
+    def moods(self):
+        moods = ['happy', 'sad', 'hungry', 'angery', 'sleepy', 'excited', 'dead']
+        if self.hunger > 7:
+            return 'hungry'
+        elif self.happiness > 7:
+            return 'happy'
+        elif self.health > 7:    
+            return 'happy'
+        elif self.cleanliness < 3:
+            return 'dirty'
+        elif self.training < 3:
+            return 'angry'
+        elif self.cleanliness < 1:
+            return 'dead'
+
+    def tick(self):
+        self.hunger += 1
+        self.happiness -= 1
+        self.cleanliness -= 1
+        # optional: limit values to 0–10
 
     #feeding
 
@@ -72,7 +94,7 @@ class Tamagotchi():
         print(f"|{self.face(self.mood).center(23)}|") #center the face in 18 spaces
         print(f"|                       |")
         print(f"|                       |")
-        print(f"|Mood: {self.mood.ljust(17)}|")
+        print(f"|Mood: {str(self.mood).ljust(17)}|")
         print(f"|Hunger: {str(self.hunger).ljust(15)}|")
         print(f"|Happiness: {str(self.happiness).ljust(12)}|")
         print(f"|Health: {str(self.health).ljust(15)}|")
@@ -93,7 +115,38 @@ class Tamagotchi():
 pet = Tamagotchi(input("What would you like to name your Tamagotchi pet? :> ")) #instantiate a new pet with name from input
 
 
+playing = True #set playing to true to start the game loop
+while playing == True:
+    print(pet.display()) #display the pet stats and face
+    print("What would you like to do?")
+    print("1. Feed")
+    print("2. Play")
+    print("3. Clean")
+    print("4. Discipline")
+    print("5. Quit")
 
+    choice = input("> ")
+
+    if choice == '1':
+        # feed the pet
+        pet.hunger -= 1
+        pet.happiness += 1
+        pet.cleanliness -= 1
+    elif choice == '2':
+        # play with the pet
+        pass
+    elif choice == '3':
+        # clean the pet
+        pass
+    elif choice == '4':
+        # discipline the pet
+        pass
+    elif choice == '5':
+        break
+
+    pet.mood = pet.moods()
+
+"""initial testing
 print(pet.face('dead')) #test
 print(pet.name) #test
 
@@ -101,6 +154,8 @@ pet.mood = 'hyped'#default as not in faces dict
 print(pet.face(pet.mood)) #test
 
 pet.mood = 'sleepy'#sleepy face as it is in dict
+
 print(pet.face(pet.mood)) #test
 pet.happiness += 1 #test increase a stat
 print(pet.display())
+"""
