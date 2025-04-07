@@ -22,9 +22,15 @@ def title_screen():
                                         "Y88P"    
     """
 
-    print(title_screen_art)
-    time.sleep(1)
-    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
+    lines = title_screen_art.strip("\n").split("\n")
+    width = os.get_terminal_size().columns  # get terminal width
+    scroll_range = width + max(len(line) for line in lines)
+
+    for i in range(scroll_range):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        for line in lines:
+            print(line[max(0, i - width):i])
+        time.sleep(0.03)
 
 
 title_screen()
@@ -44,8 +50,12 @@ class Tamagotchi():
 
 
     #moods
-    faces = {'happy': '^_^', 'sad': ';_;', 'hungry':':Q', 'angery':'>:[', 'sleepy':'-_- zZ', 'excited':'*^_^*', 'dead':'X_X'}
-
+    def face(self, mood):
+        faces = {'happy': '^_^', 'sad': ';_;', 'hungry':':Q', 'angery':'>:[', 'sleepy':'-_- zZ', 'excited':'*^_^*', 'dead':'X_X', 'default':'0~0'}
+        if mood in faces:
+            return faces[mood]
+        else:
+            return faces['default']
 
     #feeding
 
@@ -55,12 +65,42 @@ class Tamagotchi():
 
     #disciplining
 
+    #display
+    def display(self):
+        print(f" _______________________")
+        print(f"|{str(self.name).ljust(23)}|") #left justify name to 23 spaces
+        print(f"|{self.face(self.mood).center(23)}|") #center the face in 18 spaces
+        print(f"|                       |")
+        print(f"|                       |")
+        print(f"|Mood: {self.mood.ljust(17)}|")
+        print(f"|Hunger: {str(self.hunger).ljust(15)}|")
+        print(f"|Happiness: {str(self.happiness).ljust(12)}|")
+        print(f"|Health: {str(self.health).ljust(15)}|")
+        print(f"|Cleanliness: {str(self.cleanliness).ljust(10)}|")
+        print(f"|Training: {str(self.training).ljust(13)}|")
+        print(f"|Mood: {str(self.mood).ljust(17)}|")
+        print(f"|_______________________|")
+        """
+        print(f"Name: {self.name}")
+        print(f"Hunger: {self.hunger}")
+        print(f"Happiness: {self.happiness}")
+        print(f"Health: {self.health}")
+        print(f"Cleanliness: {self.cleanliness}")
+        print(f"Training: {self.training}")
+        print(f"Mood: {self.mood}")
+        """
 
-pet = Tamagotchi(input("What would you like to name your Tamagotchi pet?"))
+pet = Tamagotchi(input("What would you like to name your Tamagotchi pet? :> ")) #instantiate a new pet with name from input
 
 
 
-print(pet.faces['dead'])
-print(pet.name)
-pet.mood = 'happy'
-print(pet.faces[pet.mood])
+print(pet.face('dead')) #test
+print(pet.name) #test
+
+pet.mood = 'hyped'#default as not in faces dict
+print(pet.face(pet.mood)) #test
+
+pet.mood = 'sleepy'#sleepy face as it is in dict
+print(pet.face(pet.mood)) #test
+pet.happiness += 1 #test increase a stat
+print(pet.display())
