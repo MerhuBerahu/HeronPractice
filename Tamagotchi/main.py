@@ -62,15 +62,15 @@ class Tamagotchi():
         moods = ['happy', 'sad', 'hungry', 'angery', 'sleepy', 'excited', 'dead']
         if self.cleanliness < 1:
             return 'dead'
-        elif self.hunger > 7:
+        if self.hunger > 7:
             return 'hungry'
-        elif self.happiness > 7:
+        if self.happiness > 7:
             return 'happy'
-        elif self.health > 7:    
+        if self.health > 7:    
             return 'happy'
-        elif self.cleanliness < 3:
+        if self.cleanliness < 3:
             return 'dirty'
-        elif self.training < 3:
+        if self.training < 3:
             return 'angry'
         
 
